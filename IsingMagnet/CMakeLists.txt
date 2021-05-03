@@ -1,0 +1,4 @@
+add_executable(IsingMagnet ising_magnet.cpp)
+add_executable(IsingMagnetSS ising_magnet_simpleSampling.cpp)
+add_executable(TimeSeries_IsingMagnet TimeSeries_IsingMagnet.cpp)
+add_executable(TestIsingMagnet test_ising_magnet.cpp)
