@@ -31,6 +31,7 @@ public:
     double const  getEnergy(){ calcEnergy(); return energy;}
     //!get the lattice entry by x and y coordinate 
     int const getLatticeEntry(uint32_t x, uint32_t y ){ return Lattice[x+y*N]; }
+    //!get the lattice entry by id  
     int const getLatticeEntry(uint32_t i ){ return Lattice[i]; }
     //!set amplitude of the magnetic field
     void setField(double B_){B=B_;}
@@ -63,9 +64,11 @@ public:
         return acceptedMoves;
     }
 private:
-    
+    //! set lattice entry by the x and y coordinated 
     int setLatticeEntry(uint32_t x, uint32_t y, int value  ){ return Lattice[x+y*N]=value; }
+    //! set lattice entry by the id coordinated 
     int setLatticeEntry(uint32_t idx, int value  ){ return Lattice[idx]=value; }
+    //!energy of a single spin 
     double singleSpinEnergy(const uint32_t x, const uint32_t y){
         auto s=  getLatticeEntry(refold(x+1),y)
                 +getLatticeEntry(refold(x-1),y)
@@ -73,23 +76,23 @@ private:
                 +getLatticeEntry(x,refold(y+1));
         return -1.0*getLatticeEntry(x,y)*(J*0.5*s+B);
     }
+    //! calculate the total energy 
     void calcEnergy(){
         energy=0;
-        for(auto x=0;x<N;x++)
-                for(auto y=0;y<N;y++)
-                    energy+=singleSpinEnergy(x,y);
+        for(auto i=0;i<size;i++)
+            energy+=singleSpinEnergy(getX(i),getY(i));
         energy/=(static_cast<double>(size));
     }
+    //! calculate the total magnetization
     void calcMagnetization(){
         magnetization=0;
         for(auto i=0;i<size;i++)
             magnetization+=getLatticeEntry(i);
         magnetization/=static_cast<double>(size);
     }
-
-    // uint32_t getX(int ID){ return ID % N;}
-    // uint32_t getY(int ID){ return (ID - getX(ID))/N ;}
+    //! get the x coordinate from the id 
     uint32_t getX(int ID){ return Xcoor[ID];}
+    //! get the y coordinate from the id 
     uint32_t getY(int ID){ return Ycoor[ID];}
     //refold coordinate to linear size 
     int refold(int x){return x & NM1; };
@@ -97,7 +100,6 @@ private:
     uint32_t getRandomIndex(){return rand()&sizeM1;}
     //!get random spin (up=1, down =-1) ( 1 in bitwise = 01)
     int getRandomSpin(){ return 2*(rand()&1)-1;  }
-    // int getRandomSpin(){ return -1;  }
     //!linear size of the lattice 
     uint32_t N;
     //!linear size of the lattice minus one 
@@ -116,7 +118,9 @@ private:
     double energy;
     //!magnetization of the lattice 
     double magnetization; 
+    //!lookup tables for the x coordinate 
     std::vector<uint32_t> Xcoor;
+    //!lookup tables for the y coordinate 
     std::vector<uint32_t> Ycoor;
 };
 

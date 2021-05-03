@@ -20,8 +20,9 @@ cp ../build/IsingMagnet/IsingMagnet  .
 #                      total    time/(MCS*Sample*size)
 # original Code needs: 192.852s 117.7ns
 # XY-Lookup          : 169.464s 103.433ns
-# Bitshift Refold    : 122.366s 74.6863ns
-# Energy calc with IF: 124.914s 76.2416ns
+# Bitshift Refold    : 122.366s 74.6863ns 
+# Energy calc with IF: 124.914s 76.2416ns (declined)
+# E_tot for loop opti: 123.033s 75.0933ns (declined)
 
 #N=16
 #                      total    time/(MCS*Sample*size)
