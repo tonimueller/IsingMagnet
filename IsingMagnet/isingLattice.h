@@ -9,7 +9,7 @@ class IsingLattice{
 public:
     //!constructor of the class 
     IsingLattice(const uint32_t N_=100, double J_=1, double B_=0 ):
-    N(N_),J(J_),B(B_),size(N*N),energy(0.),magnetization(0.){
+    N(N_),NM1(N_-1),J(J_),B(B_),size(N*N),energy(0.),magnetization(0.),sizeM1(N_*N_-1){
         Xcoor.resize(size,0);
         Ycoor.resize(size,0);
         for(auto i=0;i<size;i++ ){
@@ -92,16 +92,20 @@ private:
     uint32_t getX(int ID){ return Xcoor[ID];}
     uint32_t getY(int ID){ return Ycoor[ID];}
     //refold coordinate to linear size 
-    int refold(int x){return x % N; };
+    int refold(int x){return x & NM1; };
     //! get a random index of the lattice 
-    uint32_t getRandomIndex(){return rand()%size;}
-    //!get random spin (up=1, down =-1)
-    int getRandomSpin(){ return 2*(rand()%2)-1;  }
+    uint32_t getRandomIndex(){return rand()&sizeM1;}
+    //!get random spin (up=1, down =-1) ( 1 in bitwise = 01)
+    int getRandomSpin(){ return 2*(rand()&1)-1;  }
     // int getRandomSpin(){ return -1;  }
     //!linear size of the lattice 
     uint32_t N;
+    //!linear size of the lattice minus one 
+    uint32_t NM1;
     //!square size of the lattice 
     uint32_t size;
+    //! square size minus one for bit operations 
+    uint32_t sizeM1;
     //!next neighbor interaction 
     double J; 
     //!magnetic field strenght 
