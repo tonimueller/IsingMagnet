@@ -70,7 +70,7 @@ private:
         energy=0;
         for(auto i=0;i<size;i++)
             energy+=singleSpinEnergy(getX(i),getY(i));
-        energy/=(2.*static_cast<double>(size));
+        energy/=(static_cast<double>(size));
     }
     void calcMagnetization(){
         magnetization=0;
