@@ -9,7 +9,15 @@ class IsingLattice{
 public:
     //!constructor of the class 
     IsingLattice(const uint32_t N_=100, double J_=1, double B_=0 ):
-    N(N_),J(J_),B(B_),size(N*N),energy(0.),magnetization(0.){srand(time(NULL));};
+    N(N_),J(J_),B(B_),size(N*N),energy(0.),magnetization(0.){
+        Xcoor.resize(size,0);
+        Ycoor.resize(size,0);
+        for(auto i=0;i<size;i++ ){
+            Xcoor[i]= i & (N-1);
+            Ycoor[i]= (i - Xcoor[i])/N;
+        }
+        srand(time(NULL));
+    };
     //!fill lattice with spins 
     void fillLattice(){
         Lattice.resize(0);
@@ -79,8 +87,10 @@ private:
         magnetization/=static_cast<double>(size);
     }
 
-    uint32_t getX(int ID){ return ID % N;}
-    uint32_t getY(int ID){ return (ID - getX(ID))/N ;}
+    // uint32_t getX(int ID){ return ID % N;}
+    // uint32_t getY(int ID){ return (ID - getX(ID))/N ;}
+    uint32_t getX(int ID){ return Xcoor[ID];}
+    uint32_t getY(int ID){ return Ycoor[ID];}
     //refold coordinate to linear size 
     int refold(int x){return x % N; };
     //! get a random index of the lattice 
@@ -102,6 +112,8 @@ private:
     double energy;
     //!magnetization of the lattice 
     double magnetization; 
+    std::vector<uint32_t> Xcoor;
+    std::vector<uint32_t> Ycoor;
 };
 
 #endif /*ISING_LATTICE_H*/

@@ -71,7 +71,7 @@ int main(int argc, char* argv[]){
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     // std::chrono::duration<double> duration(end - begin);
     std::cout << "Time difference = " << std::chrono::duration<double> (end - begin).count() << "s" << std::endl;
-    std::cout << "time/(MCS*Sample) = " << std::chrono::duration_cast<std::chrono::microseconds> (end - begin).count()/(static_cast<double>(nTemps*nSamples*nIterations*nSteps)) << "us" << std::endl;
+    std::cout << "time/(MCS*Sample) = " << std::chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count()/(static_cast<double>(nTemps*nSamples*nIterations*nSteps*N*N)) << "ns" << std::endl;
     FileWriter writer(outputM);
     std::vector<std::vector<double> > data;
     data.insert(data.begin(),magnetization); 
