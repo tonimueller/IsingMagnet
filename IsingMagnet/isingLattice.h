@@ -60,7 +60,6 @@ public:
                 }
             }
         }
-        // std::cout << "Accpected Moves = " << acceptedMoves << std::endl;
         return acceptedMoves;
     }
 private:
@@ -68,17 +67,10 @@ private:
     int setLatticeEntry(uint32_t x, uint32_t y, int value  ){ return Lattice[x+y*N]=value; }
     int setLatticeEntry(uint32_t idx, int value  ){ return Lattice[idx]=value; }
     double singleSpinEnergy(const uint32_t x, const uint32_t y){
-        auto s=0;
-        if (x==0 || y==0 ||x==NM1 || y==NM1)
-            s=  getLatticeEntry(refold(x+1),y)
+        auto s=  getLatticeEntry(refold(x+1),y)
                 +getLatticeEntry(refold(x-1),y)
                 +getLatticeEntry(x,refold(y-1))
                 +getLatticeEntry(x,refold(y+1));
-        else 
-            s=  getLatticeEntry((x+1),y)
-                +getLatticeEntry((x-1),y)
-                +getLatticeEntry(x,(y-1))
-                +getLatticeEntry(x,(y+1));
         return -1.0*getLatticeEntry(x,y)*(J*0.5*s+B);
     }
     void calcEnergy(){

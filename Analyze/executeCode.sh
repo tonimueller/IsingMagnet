@@ -15,6 +15,20 @@ nIterations=200
 B=0
 cp ../build/IsingMagnet/IsingMagnet  .
 ./IsingMagnet $samples $N $nIterations $stepWide $B
+
+# N=32
 #                      total    time/(MCS*Sample*size)
 # original Code needs: 192.852s 117.7ns
-# XY-Lookup          :
+# XY-Lookup          : 169.464s 103.433ns
+# Bitshift Refold    : 122.366s 74.6863ns
+# Energy calc with IF: 124.914s 76.2416ns
+
+#N=16
+#                      total    time/(MCS*Sample*size)
+# original Code needs: 
+# XY-Lookup          : 43.2275s 105.536ns
+# Bitshift RND Number: 39.3425s 96.0511ns
+# Bitshift Refold    : 30.5678s 74.6285ns
+# Energy calc with IF: 31.898s  77.8759ns
+#
+
