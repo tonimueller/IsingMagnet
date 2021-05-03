@@ -1,1 +1,5 @@
 build/
+.vscode*
+*.dat
+Analyze/IsingMagnet
+Analyze/TimeSeries_IsingMagnet
